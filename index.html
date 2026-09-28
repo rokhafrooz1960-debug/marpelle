@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مارپله مطالعات پنجم: احساسات ما</title>
+    <style>
+        /* بارگذاری فونت‌های اختصاصی فارسی */
+        @font-face {
+            font-family: 'DimaShekasteh';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/Dima%20Shekasteh%202.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Danstevis';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/danstevis.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'BTitr';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/B%20Titr%20Bold_0.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'BKoodak';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/B%20Koodak%20Bold_0.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'BMitra';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/B%20Mitra%20Bold_0.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'BNazanin';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/B-NAZANIN.TTF') format('truetype');
+        }
+        @font-face {
+            font-family: 'MjFaraz';
+            src: url('https://cdn.jsdelivr.net/gh/rokhafrooz1960-debug/my_fonts/Mj_Faraz_0.TTF') format('truetype');
+        }
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #fab1a0;
+            --accent-color: #00b894;
+        }
+
+        body {
+            font-family: 'BKoodak', 'BMitra', 'BNazanin', sans-serif;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            background-color: #130f40;
+            color: #fff;
+        }
+
+        /* پس‌زمینه زنده کهکشانی */
+        .stars-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: #0b0914;
+        }
+        .stars-bg::after {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: transparent url('data:image/svg+xml;utf8,<svg width="250" height="250" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1.5" fill="white" opacity="0.8"/><circle cx="80" cy="50" r="2" fill="%23fbc531" opacity="0.9"/><circle cx="150" cy="120" r="2.5" fill="white" opacity="0.7"/><circle cx="40" cy="160" r="1" fill="%234cd137" opacity="0.8"/><circle cx="180" cy="30" r="1.5" fill="%2300a8ff" opacity="0.9"/><circle cx="220" cy="200" r="2" fill="white" opacity="0.6"/></svg>') repeat;
+            animation: rotateStars 120s linear infinite; opacity: 0.85;
+        }
+        .stars-bg::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(232, 67, 147, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(9, 132, 227, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.2) 0%, transparent 60%),
+                linear-gradient(135deg, #130f40 0%, #30336b 50%, #1e272e 100%);
+        }
+        @keyframes rotateStars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        #screen-home, #screen-game, #screen-result {
+            width: 95%; max-width: 840px;
+            max-height: 96vh; overflow-y: auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 25px 20px; border-radius: 25px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.2);
+            text-align: center; display: none;
+            animation: fadeIn 0.8s ease-out; box-sizing: border-box; color: #fff;
+        }
+
+        #screen-game, #screen-result { background: rgba(255, 255, 255, 0.96); color: #333; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+
+        #screen-home { display: block; }
+
+        h1.game-title {
+            font-family: 'BTitr', 'MjFaraz', sans-serif;
+            font-size: 2.6rem; margin-top: 10px; margin-bottom: 10px;
+            background: linear-gradient(to right, #00b894, #55efc4, #74b9ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+        }
+
+        .subtitle {
+            font-family: 'Danstevis', 'BKoodak', sans-serif;
+            font-size: 1.3rem; color: #dfe6e9; margin-bottom: 25px; line-height: 1.8;
+        }
+
+        .input-group { margin: 25px 0; }
+        input[type="text"], textarea {
+            font-family: 'BKoodak', 'BMitra', sans-serif;
+            padding: 14px; border-radius: 15px; border: 2px solid rgba(255,255,255,0.4);
+            width: 85%; max-width: 360px; font-size: 1.15rem; text-align: center; 
+            background: rgba(0,0,0,0.4); color: #fff; outline: none;
+            transition: 0.3s; box-sizing: border-box;
+        }
+        input[type="text"]:focus, textarea:focus { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(0,184,148,0.4); }
+        input[type="text"]::placeholder, textarea::placeholder { color: #b2bec3; }
+
+        .btn-start {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            background: linear-gradient(135deg, #00b894, #00cec9); color: white; border: none; padding: 12px 35px;
+            border-radius: 30px; font-size: 1.25rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0,184,148,0.4);
+            transition: 0.3s; width: 80%; max-width: 300px; margin-bottom: 12px;
+        }
+        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,184,148,0.6); }
+        .btn-start:active { transform: translateY(2px); }
+
+        .btn-upload {
+            font-family: 'BKoodak', sans-serif;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4);
+            color: #fff; padding: 10px 20px; border-radius: 15px; cursor: pointer;
+            font-size: 1rem; transition: 0.3s;
+        }
+        .btn-upload:hover { background: rgba(255,255,255,0.25); }
+
+        .audio-control {
+            position: fixed; top: 15px; right: 15px; background: rgba(255,255,255,0.9); padding: 10px;
+            border-radius: 50%; cursor: pointer; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); color: #333;
+        }
+
+        /* بورد بازی */
+        #game-wrapper { position: relative; width: 100%; max-width: 470px; aspect-ratio: 1/1; margin: 0 auto 15px auto; }
+        #game-board {
+            display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr);
+            width: 100%; height: 100%; border: 5px solid #2d3436; background: #f1f2f6;
+            border-radius: 10px; overflow: hidden; position: relative;
+        }
+
+        .cell {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            border: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center;
+            font-size: 1rem; color: #2d3436; position: relative; z-index: 1;
+        }
+        .cell:nth-child(even) { background: #ffeaa7; }
+        .cell:nth-child(odd) { background: #fab1a0; }
+
+        #svg-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+        }
+
+        #player-piece {
+            position: absolute; transition: all 0.45s cubic-bezier(0.25, 1.5, 0.5, 1);
+            z-index: 10; display: flex; justify-content: center; align-items: center;
+            font-size: 2rem; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+        }
+
+        /* تاس سه‌بعدی */
+        .dice-container { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-bottom: 10px; perspective: 1000px; }
+        .scene { width: 75px; height: 75px; perspective: 600px; cursor: pointer; margin-bottom: 5px; }
+        .cube {
+            width: 100%; height: 100%; position: relative;
+            transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateZ(-37.5px) rotateX(-15deg) rotateY(15deg);
+        }
+        
+        .cube__face {
+            position: absolute; width: 75px; height: 75px;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0);
+            border: 1px solid #d1d8e0; border-radius: 14px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.2);
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+            padding: 9px; box-sizing: border-box;
+        }
+        
+        .pip {
+            width: 13px; height: 13px; background: #2d3436; border-radius: 50%;
+            align-self: center; justify-self: center;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.6), 0 1px 1px rgba(255,255,255,0.8);
+        }
+        .pip-red { background: #e74c3c; }
+
+        .cube__face--1 { transform: rotateY(0deg) translateZ(37.5px); }
+        .cube__face--2 { transform: rotateY(90deg) translateZ(37.5px); }
+        .cube__face--3 { transform: rotateY(180deg) translateZ(37.5px); }
+        .cube__face--4 { transform: rotateY(-90deg) translateZ(37.5px); }
+        .cube__face--5 { transform: rotateX(90deg) translateZ(37.5px); }
+        .cube__face--6 { transform: rotateX(-90deg) translateZ(37.5px); }
+
+        /* مودال سوالات */
+        #question-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000;
+            padding: 15px; box-sizing: border-box;
+        }
+        .modal-content {
+            background: white; padding: 22px; border-radius: 22px; width: 100%; max-width: 600px;
+            max-height: 92vh; overflow-y: auto; text-align: center; color: #2d3436;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+        }
+
+        .q-badges {
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+            margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px dashed #dfe6e9;
+        }
+        .badge {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            padding: 5px 14px; border-radius: 20px; font-size: 0.9rem;
+        }
+        .badge-type { background: #6c5ce7; color: #fff; }
+        .badge-priority { background: #e84393; color: #fff; }
+        .badge-easy { background: #dff9fb; color: #00b894; border: 1px solid #00b894; }
+        .badge-med { background: #fef9e7; color: #f39c12; border: 1px solid #f39c12; }
+        .badge-hard { background: #ffebef; color: #e74c3c; border: 1px solid #e74c3c; }
+        .badge-progress { background: #f1f2f6; color: #2d3436; }
+
+        .question-text {
+            font-family: 'BMitra', 'BKoodak', sans-serif;
+            font-size: 1.3rem; font-weight: bold; line-height: 2; color: #2d3436;
+            margin: 12px 0; text-align: right; background: #f8f9fa; padding: 16px;
+            border-radius: 14px; border-right: 5px solid var(--primary-color);
+            white-space: pre-line;
+        }
+
+        .timer {
+            font-family: 'BTitr', sans-serif;
+            font-size: 1.35rem; color: #e74c3c; margin: 6px auto;
+            background: #fff5f5; display: inline-block; padding: 5px 20px; border-radius: 20px;
+            border: 1px solid #fab1a0;
+        }
+
+        /* دکمه‌های گزینه‌ای و انتخاب پاسخ داخل متن */
+        .options-grid {
+            display: flex; flex-direction: column; gap: 10px; margin: 12px 0;
+        }
+        .options-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0;
+        }
+        .opt-btn {
+            font-family: 'BKoodak', 'BMitra', sans-serif;
+            background: #f1f2f6; color: #2d3436; border: 2px solid #dfe6e9;
+            padding: 12px 16px; border-radius: 14px;
+            font-size: 1.15rem; cursor: pointer; transition: 0.2s;
+            text-align: right; line-height: 1.6;
+        }
+        .opt-btn.center-text { text-align: center; font-size: 1.25rem; padding: 14px; }
+        .opt-btn:hover { background: #ecebff; border-color: var(--primary-color); transform: translateY(-2px); }
+
+        /* استایل ویژه سوالات انتخاب پاسخ داخل پرانتز */
+        .inline-choice-box {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #eef1ff; padding: 4px 10px; border-radius: 25px;
+            border: 2px solid #6c5ce7; margin: 0 4px; vertical-align: middle;
+        }
+        .inline-choice-btn {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            background: #fff; color: #6c5ce7; border: 1px solid #a29bfe;
+            padding: 4px 14px; border-radius: 18px; font-size: 1.05rem;
+            cursor: pointer; transition: 0.2s;
+        }
+        .inline-choice-btn:hover {
+            background: #6c5ce7; color: #fff; transform: scale(1.06);
+        }
+
+        .modal-content input[type="text"], .modal-content textarea {
+            background: #fff; color: #2d3436; border: 2px solid var(--primary-color);
+            width: 95%; max-width: 100%; text-align: right; padding: 12px; font-size: 1.15rem;
+        }
+        .modal-content textarea { min-height: 95px; resize: vertical; line-height: 1.7; }
+
+        .hint-box {
+            font-family: 'Danstevis', 'BKoodak', sans-serif;
+            font-size: 1.1rem; color: #5c4b00; background: #fff9db;
+            padding: 9px 14px; border-radius: 12px; margin-bottom: 10px; text-align: right;
+            border: 1px solid #ffe066; line-height: 1.7;
+        }
+
+        .feedback-box {
+            font-family: 'BMitra', 'BNazanin', sans-serif;
+            display: none; margin-top: 12px; padding: 16px; border-radius: 15px;
+            font-size: 1.2rem; line-height: 1.85; text-align: right;
+        }
+        .reason-box {
+            font-family: 'BNazanin', 'BMitra', sans-serif;
+            margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.12);
+            font-size: 1.18rem; color: #2d3436; font-weight: bold;
+        }
+
+        .btn-continue {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: #fff; border: none;
+            padding: 11px 28px; border-radius: 25px;
+            font-size: 1.1rem; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(108,92,231,0.35);
+        }
+
+        .trophy { font-size: 5.5rem; margin: 5px 0; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2)); animation: pulse 2s infinite ease-in-out; }
+
+        /* بخش جایزه و پنجره بازشوی پخش آنلاین انیمیشن */
+        .reward-box {
+            background: linear-gradient(135deg, #fff9db, #fff3bf);
+            border: 3px solid #fcc419;
+            border-radius: 20px;
+            padding: 18px;
+            margin: 18px auto;
+            max-width: 600px;
+            box-shadow: 0 8px 25px rgba(252, 196, 25, 0.3);
+        }
+        .reward-title {
+            font-family: 'BTitr', sans-serif;
+            color: #d9480f;
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .btn-reward-link {
+            display: inline-block;
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            background: linear-gradient(135deg, #e84393, #fd79a8);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            margin: 6px;
+            box-shadow: 0 5px 15px rgba(232, 67, 147, 0.4);
+            transition: 0.3s;
+        }
+        .btn-reward-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 67, 147, 0.6);
+        }
+
+        /* پنجره مودال اختصاصی پخش آنلاین ویدیو */
+        #video-modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(11, 9, 20, 0.92);
+            display: none; justify-content: center; align-items: center;
+            z-index: 2000; padding: 15px; box-sizing: border-box;
+            backdrop-filter: blur(8px);
+        }
+        .video-modal-box {
+            background: #1e272e; border: 3px solid #fcc419; border-radius: 24px;
+            width: 100%; max-width: 780px; padding: 20px; text-align: center;
+            color: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            animation: fadeIn 0.4s ease-out;
+        }
+        .video-modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-close-video {
+            font-family: 'BTitr', sans-serif;
+            background: #e74c3c; color: #fff; border: none;
+            padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 1rem;
+        }
+        .online-player-wrapper {
+            width: 100%; border-radius: 16px; overflow: hidden;
+            background: #000; border: 2px solid #f59f00; position: relative;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 50% { transform: translateX(10px); } 75% { transform: translateX(-10px); } }
+        .shake-animation { animation: shake 0.4s ease-in-out; }
+
+        .confetti { position: fixed; z-index: 1500; pointer-events: none; }
+
+        .game-header {
+            font-family: 'BTitr', 'BKoodak', sans-serif;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+            margin-bottom: 12px; font-size: 1rem; color: var(--primary-color);
+            background: #fff; padding: 10px 14px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+        .header-stat { background: #f1f2f6; padding: 5px 11px; border-radius: 10px; color: #2d3436; }
+        .header-correct { background: #e3fcef; padding: 5px 11px; border-radius: 10px; color: #00b894; border: 1px solid #00b894; }
+
+        @media print { .no-print { display: none !important; } body, .stars-bg { background: none; } #screen-result { box-shadow: none; overflow: visible; } }
+    </style>
+</head>
+<body>
+
+    <div class="stars-bg"></div>
+
+    <div class="audio-control no-print" onclick="toggleMusic()">
+        <span id="music-icon">🔇</span>
+        <input type="file" id="music-upload" hidden accept="audio/*" onchange="handleMusicUpload(event)">
+    </div>
+
+    <!-- صفحه خانه -->
+    <div id="screen-home">
+        <h1 class="game-title">🐍 مارپله احساسات ما 🪜</h1>
+        <p class="subtitle">
+            مرور خط‌به‌خط و مفهومی درس دوم مطالعات اجتماعی پایه پنجم ابتدایی<br>
+            (همراه با پله طلایی بزرگ، شاه‌مار هیجان‌انگیز و جایزه پخش آنلاین انیمیشن در پایان بازی!)
+        </p>
+        
+        <div class="input-group">
+            <input type="text" id="student-name" placeholder="نام قشنگت رو اینجا بنویس قهرمان...">
+        </div>
+
+        <button class="btn-start" onclick="startGame()">شروع ماجراجویی!</button>
+        <br><br>
+        <button class="btn-upload no-print" onclick="document.getElementById('music-upload').click()">🎵 بارگذاری آهنگ دلخواه (اختیاری)</button>
+    </div>
+
+    <!-- صفحه بازی -->
+    <div id="screen-game">
+        <div class="game-header">
+            <span id="display-name">بازیکن: -</span>
+            <span id="display-moves" class="header-stat">پرتاب تاس: ۰</span>
+            <span id="display-correct" class="header-correct">پاسخ صحیح: ۰</span>
+            <span id="display-qcount" class="header-stat">سوال: ۰ از ۲۵</span>
+            <span id="display-pos" style="background: #ffeaa7; padding: 5px 12px; border-radius: 10px; color:#2d3436;">خونه: ۱</span>
+        </div>
+
+        <div id="game-wrapper">
+            <div id="game-board"></div>
+            <svg id="svg-layer"></svg>
+            <div id="player-piece">😆</div>
+        </div>
+
+        <div class="dice-container">
+            <div class="scene" onclick="rollDice()" id="dice-scene">
+                <div class="cube" id="cube">
+                    <div class="cube__face cube__face--1">
+                        <div class="pip pip-red" style="grid-area: 2 / 2;"></div>
+                    </div>
+                    <div class="cube__face cube__face--2">
+                        <div class="pip" style="grid-area: 1 / 3;"></div>
+                        <div class="pip" style="grid-area: 3 / 1;"></div>
+                    </div>
+                    <div class="cube__face cube__face--3">
+                        <div class="pip" style="grid-area: 1 / 3;"></div>
+                        <div class="pip" style="grid-area: 2 / 2;"></div>
+                        <div class="pip" style="grid-area: 3 / 1;"></div>
+                    </div>
+                    <div class="cube__face cube__face--4">
+                        <div class="pip pip-red" style="grid-area: 1 / 1;"></div>
+                        <div class="pip pip-red" style="grid-area: 1 / 3;"></div>
+                        <div class="pip pip-red" style="grid-area: 3 / 1;"></div>
+                        <div class="pip pip-red" style="grid-area: 3 / 3;"></div>
+                    </div>
+                    <div class="cube__face cube__face--5">
+                        <div class="pip" style="grid-area: 1 / 1;"></div>
+                        <div class="pip" style="grid-area: 1 / 3;"></div>
+                        <div class="pip" style="grid-area: 2 / 2;"></div>
+                        <div class="pip" style="grid-area: 3 / 1;"></div>
+                        <div class="pip" style="grid-area: 3 / 3;"></div>
+                    </div>
+                    <div class="cube__face cube__face--6">
+                        <div class="pip" style="grid-area: 1 / 1;"></div>
+                        <div class="pip" style="grid-area: 1 / 3;"></div>
+                        <div class="pip" style="grid-area: 2 / 1;"></div>
+                        <div class="pip" style="grid-area: 2 / 3;"></div>
+                        <div class="pip" style="grid-area: 3 / 1;"></div>
+                        <div class="pip" style="grid-area: 3 / 3;"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-family: 'BTitr', sans-serif; font-size: 1.05rem; color: #333; margin: 0; background: #fff; padding: 5px 18px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">روی تاس کلیک کن! (فقط با پاسخ درست جلو می‌روی)</p>
+        </div>
+    </div>
+
+    <!-- صفحه نتیجه و جایزه انیمیشن -->
+    <div id="screen-result">
+        <div class="trophy">🏆</div>
+        <h2 style="font-family: 'DimaShekasteh', 'BTitr', sans-serif; font-size: 2.2rem; color: var(--primary-color); margin: 5px 0;">آفرین قهرمان! با تلاش و پاسخ‌های درستت به خانه ۱۰۰ رسیدی!</h2>
+        
+        <div id="score-details" style="font-family: 'BMitra', 'BKoodak', sans-serif; font-size: 1.25rem; font-weight: bold; margin: 12px auto; line-height: 2; text-align: right; background: #fdfbfb; padding: 18px 22px; border-radius: 15px; border: 2px solid #dfe6e9; max-width: 480px; color:#333;"></div>
+        
+        <!-- بخش جایزه تماشای انیمیشن -->
+        <div class="reward-box no-print">
+            <h3 class="reward-title">🎁 جایزه ویژه قهرمان: تماشای آنلاین انیمیشن!</h3>
+            <p style="font-family: 'BKoodak', sans-serif; font-size: 1.15rem; color: #495057; margin-bottom: 12px;">
+                برای تماشای آنلاین انیمیشن جایزه در پنجره سینمایی یا باز شدن در پنجره جدید، روی دکمه‌های زیر کلیک کن:
+            </p>
+            <button class="btn-reward-link" onclick="openVideoModal()">
+                🎬 باز کردن پنجره پخش آنلاین انیمیشن
+            </button>
+            <button class="btn-reward-link" style="background: linear-gradient(135deg, #0984e3, #74b9ff);" onclick="openPopupWindow()">
+                🪟 باز کردن در پنجره مستقل جدید
+            </button>
+        </div>
+
+        <button class="btn-start no-print" onclick="location.reload()" style="margin-top: 10px;">دوباره بازی کنیم؟</button>
+        <br>
+        <button class="btn-upload no-print" style="background: #2d3436; color: #fff;" onclick="window.print()">🖨️ چاپ کارنامه</button>
+    </div>
+
+    <!-- پنجره بازشوی (Modal) پخش آنلاین انیمیشن -->
+    <div id="video-modal" class="no-print">
+        <div class="video-modal-box">
+            <div class="video-modal-header">
+                <span style="font-family: 'BTitr', sans-serif; font-size: 1.3rem; color: #fcc419;">🎬 پخش آنلاین انیمیشن جایزه قهرمان</span>
+                <button class="btn-close-video" onclick="closeVideoModal()">✖ بستن پنجره</button>
+            </div>
+
+            <div class="online-player-wrapper">
+                <!-- پخش‌کننده مستقیم ویدیو در صورت پشتیبانی لینک از دانلود مستقیم + آی‌فریم آنلاین -->
+                <video id="reward-video-tag" controls preload="metadata" style="width: 100%; max-height: 380px; display: none; background: #000;">
+                    <source src="https://abrehamrahi.ir/o/public/KeEz9TOS/download" type="video/mp4">
+                    <source src="https://abrehamrahi.ir/o/public/KeEz9TOS/" type="video/mp4">
+                </video>
+                <iframe id="reward-iframe" src="" width="100%" height="380" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="display: block; background: #000;"></iframe>
+            </div>
+
+            <div style="margin-top: 14px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <button class="btn-reward-link" style="font-size: 1rem; padding: 9px 22px;" onclick="openPopupWindow()">
+                    🚀 باز کردن مستقیم در پنجره پاپ‌آپ مرورگر
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال سوال -->
+    <div id="question-modal">
+        <div class="modal-content" id="modal-box">
+            <div class="q-badges">
+                <span id="q-type-badge" class="badge badge-type">نوع سوال</span>
+                <span id="q-level-badge" class="badge badge-easy">سطح</span>
+                <span id="q-num-badge" class="badge badge-progress">سوال ۱ از ۲۵</span>
+            </div>
+
+            <div class="timer" id="timer">۶۰</div>
+
+            <div id="question-text" class="question-text">متن سوال</div>
+
+            <!-- محل قرارگیری پویا بر اساس نوع سوال -->
+            <div id="interaction-area"></div>
+
+            <!-- کادر بازخورد و دلیل درستی پاسخ -->
+            <div id="feedback-msg" class="feedback-box"></div>
+        </div>
+    </div>
+
+    <audio id="bg-audio" loop src="https://dl.boxmusics.ir/songs/401/02/Kodak-Bikalam-02.mp3"></audio>
+
+    <script>
+        const REWARD_VIDEO_URL = "https://abrehamrahi.ir/o/public/KeEz9TOS/";
+
+        // تبدیل تمامی اعداد انگلیسی به فارسی
+        function toPersianDigits(val) {
+            if (val === null || val === undefined) return '';
+            const persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return val.toString().replace(/\d/g, x => persian[x]);
+        }
+
+        // بانک ۲۵ سوال استاندارد درس دوم مطالعات اجتماعی پنجم
+        const questionsBank = [
+            // === سوالات تشریحی اصلی درس (دارای اولویت در میان سوالات تشریحی) ===
+            {
+                id: 1,
+                priority: true,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی (اصلی درس)',
+                level: 'آسان | مفهومی',
+                levelClass: 'badge-easy',
+                q: '۱. احساسات خوشایند و ناخوشایند چه فرقی با همدیگر دارند و چه تأثیری در ما می‌گذارند؟',
+                hint: 'به تاثیر خوب احساسات خوشایند (که دوستشان داریم) و تاثیر احساسات ناخوشایند (که دوستشان نداریم و می‌خواهیم از آن‌ها دور باشیم) اشاره کن.',
+                groups: [
+                    ['خوب', 'خوبی', 'مثبت', 'شادی', 'خوشحال', 'لذت'],
+                    ['دوست داریم', 'دوست', 'علاقه', 'خوشمان'],
+                    ['دوست نداریم', 'بد', 'منفی', 'ناراحت', 'غم'],
+                    ['دور', 'دوری', 'فرار', 'برطرف']
+                ],
+                minGroups: 2,
+                displayAnswer: 'احساسات خوشایند در ما تأثیر خوبی می‌گذارند و ما آن‌ها را دوست داریم، اما احساسات ناخوشایند را دوست نداریم و می‌خواهیم از آن‌ها دور باشیم.',
+                reason: 'احساسات ما به دو دسته خوشایند و ناخوشایند تقسیم می‌شوند که هر کدام تأثیر متفاوتی بر روحیه و رفتار ما دارند.'
+            },
+            {
+                id: 2,
+                priority: true,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی (اصلی درس)',
+                level: 'متوسط | اصلی درس',
+                levelClass: 'badge-med',
+                q: '۲. چه راه‌هایی برای برطرف کردن احساس غم و اندوه وجود دارد؟ (دو مورد را بنویسید.)',
+                hint: 'اشاره به دو مورد یا بیان مفهومی هرکدام (دعا کردن، دلداری دادن به خود، فکر به علت و راه‌حل، مشورت با بزرگ‌ترها، نقاشی یا نوشتن، کارهای شاد و کمک به دیگران) کافی است.',
+                groups: [
+                    ['دعا', 'خدا', 'خداوند', 'نماز', 'نیایش'],
+                    ['دلداری', 'طبیعی', 'همیشگی نیست', 'گذرا', 'امید', 'شاد باشم'],
+                    ['علت', 'فکر', 'راه حل', 'برطرف', 'دلیل', 'حل کردن'],
+                    ['بزرگتر', 'پدر', 'مادر', 'معلم', 'مشاور', 'مشورت', 'صحبت', 'کمک گرفتن', 'حرف زدن', 'پدربزرگ'],
+                    ['نقاشی', 'بنویسیم', 'نوشتن', 'کاغذ', 'یادداشت'],
+                    ['شاد', 'سرگرم', 'کمک به دیگران', 'کمک', 'بازی', 'تفریح', 'سرگرمی']
+                ],
+                minGroups: 2,
+                displayAnswer: '۱- دعا کنیم و از خداوند کمک بگیریم ۲- به خودمان دلداری بدهیم که غم همیشگی نیست ۳- درباره علت اندوه و راه برطرف کردن آن فکر کنیم ۴- از بزرگ‌ترها کمک و مشورت بگیریم ۵- درباره اندوه خود بنویسیم یا نقاشی کنیم ۶- کارهای شاد انجام دهیم یا به دیگران کمک کنیم.',
+                reason: 'استفاده از این روش‌های سالم به ما کمک می‌کند تا هنگام روبه‌رو شدن با غم و اندوه، آرامش خود را بازیابیم و دوباره شاد شویم.'
+            },
+            {
+                id: 3,
+                priority: true,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی (اصلی درس)',
+                level: 'دشوار | اصلی درس',
+                levelClass: 'badge-hard',
+                q: '۳. «ترس بجا» و «ترس نابجا» چیست؟ از هر کدام دو مثال بزنید.',
+                hint: 'به تعریف ترس بجا (محافظت از جان در برابر خطر واقعی مثل حیوان خطرناک، بلندی، خیابان) و ترس نابجا (ترس بی‌مورد مثل تاریکی یا تنهایی) اشاره کن.',
+                groups: [
+                    ['خطر', 'مقابله', 'محافظت', 'سلامت', 'جان', 'احتیاط', 'خداوند', 'مفید'],
+                    ['زنبور', 'بلندی', 'جای بلند', 'خیابان', 'ریل', 'غریبه', 'آتش', 'برق', 'مار', 'حیوان'],
+                    ['نابجا', 'بی مورد', 'الکی', 'خیالی', 'بی دلیل', 'بدون خطر', 'آسیب'],
+                    ['تاریکی', 'تنهایی', 'امتحان', 'سوسک', 'خیال', 'ارواح', 'خواب']
+                ],
+                minGroups: 2,
+                displayAnswer: 'ترس بجا ترسی است که خداوند برای مقابله با خطر و محافظت از انسان در وجود ما قرار داده است (مانند ترس از دست زدن به لانه زنبور، پریدن از بلندی، دویدن وسط خیابان یا رفتن با غریبه). ترس نابجا ترسی غیرضروری از چیزهایی است که خطر واقعی ندارند (مانند ترس از تاریکی اتاق یا تنهایی در خانه).',
+                reason: 'شناخت تفاوت ترس بجا و نابجا به ما کمک می‌کند در برابر خطرهای واقعی احتیاط کنیم و ترس‌های بی‌مورد را از خود دور سازیم.'
+            },
+            {
+                id: 4,
+                priority: true,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی (اصلی درس)',
+                level: 'متوسط | اصلی درس',
+                levelClass: 'badge-med',
+                q: '۴. با ترس‌هایمان چگونه برخورد کنیم و وظیفه‌ی ما در برابر دیگران درباره‌ی احساس ترس چیست؟',
+                hint: 'به احتیاط کردن در ترس‌های بجا، برطرف کردن ترس نابجا با کمک بزرگ‌ترها و دعا، و نترساندن دیگران حتی برای شوخی اشاره کن.',
+                groups: [
+                    ['احتیاط', 'مراقبت', 'محافظت', 'خطر', 'ترسو نگوییم'],
+                    ['نترسانیم', 'شوخی', 'تفریح', 'ترساندن'],
+                    ['بزرگتر', 'پدر', 'مادر', 'مشاور', 'کمک', 'مشورت', 'صحبت'],
+                    ['دعا', 'خدا', 'خداوند', 'آرامش', 'فکر']
+                ],
+                minGroups: 2,
+                displayAnswer: 'در برابر ترس‌های بجا باید احتیاط کنیم تا سلامت ما حفظ شود و به کسی که احتیاط می‌کند ترسو نگوییم. برای رفع ترس‌های نابجا با بزرگ‌ترها صحبت و مشورت کنیم و از خدا کمک بخواهیم؛ همچنین هرگز برای شوخی و تفریح دیگران را نترسانیم.',
+                reason: 'برخورد درست با ترس باعث حفظ سلامت خودمان و دیگران می‌شود و آرامش را در زندگی بیشتر می‌کند.'
+            },
+
+            // === سایر سوالات تشریحی درس ===
+            {
+                id: 5,
+                priority: false,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۵. چهار نمونه از کارها یا اتفاقاتی را که باعث به وجود آمدن «احساس خوشایند» و شادی در ما می‌شوند، نام ببرید.',
+                hint: 'کافی است حداقل ۲ نمونه از کارهای شادی‌بخش (مانند بازی با دوستان، خرید لباس و کفش، تماشای فیلم و کارتون، دیدن دوستان و...) را بنویسی.',
+                groups: [
+                    ['بازی', 'تفریح', 'ورزش'],
+                    ['خرید', 'لباس', 'کفش', 'هدیه', 'جایزه'],
+                    ['فیلم', 'کارتون', 'تلویزیون', 'برنامه کودک'],
+                    ['دیدار', 'دوستان', 'آشنایان', 'فامیل', 'پدر', 'مادر', 'خانواده'],
+                    ['مسابقه', 'برنده', 'نقاشی', 'نوروز', 'جشن', 'مسافرت', 'طبیعت', 'کمک', 'نماز']
+                ],
+                minGroups: 2,
+                displayAnswer: '۱- بازی با دوستان در زنگ تفریح ۲- خرید لباس و کفش ۳- تماشای فیلم و کارتون ۴- دیدار دوستان و آشنایان',
+                reason: 'انجام دادن این فعالیت‌ها و تجربه این موقعیت‌ها در زندگی روزمره باعث ایجاد احساس خوشایند و شادی در ما می‌شوند.'
+            },
+            {
+                id: 6,
+                priority: false,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                q: '۶. چرا نباید به فردی که «ترس بجا» دارد، «ترسو» بگوییم؟',
+                hint: 'به مفهوم احتیاط کردن و به خطر نینداختن جان و سلامتی اشاره کن.',
+                groups: [
+                    ['احتیاط', 'مواظبت', 'مراقبت', 'فکر'],
+                    ['سلامت', 'سلامتی', 'جان', 'بدن', 'خطر', 'آسیب', 'محافظت']
+                ],
+                minGroups: 1,
+                displayAnswer: 'زیرا او احتیاط می‌کند و با این کار، سلامت و جان خود را به خطر نمی‌اندازد.',
+                reason: 'ترس بجا نشانه احتیاط و عاقل بودن فرد در برابر خطرهای واقعی است.'
+            },
+            {
+                id: 7,
+                priority: false,
+                type: 'desc',
+                typeTitle: 'سوال تشریحی',
+                level: 'متوسط | عملکردی و واقعی',
+                levelClass: 'badge-med',
+                q: '۷. در هر یک از موقعیت‌های واقعی زیر، اگر افراد نترسند چه خطری سلامت آن‌ها را تهدید می‌کند؟ (اشاره به دو مورد کافی است)\nالف) دست بردن در لانه‌ی زنبور\nب) پریدن از جای بلند\nج) دویدن وسط خیابان یا ایستادن روی ریل\nد) رفتن همراه فرد غریبه',
+                hint: 'کافی است خطر یا مفهوم دو مورد (مانند نیش زدن زنبور، شکستن دست و پا و آسیب دیدن، تصادف با ماشین یا قطار، دزدیده شدن) را به زبان خودت بنویسی.',
+                groups: [
+                    ['نیش', 'گزیدن', 'زنبور', 'پشه', 'حشره', 'باد کردن', 'گزش'],
+                    ['شکستن', 'بشکند', 'دست و پا', 'آسیب', 'مجروح', 'زخمی', 'پرت', 'افتادن', 'بیمارستان', 'صدمه', 'ضربه'],
+                    ['تصادف', 'ماشین', 'قطار', 'برخورد', 'خودرو', 'زیر گرفتن', 'مرگ', 'کشته'],
+                    ['دزدیده', 'دزد', 'ربوده', 'خطر', 'گم', 'غریبه', 'بدزدند', 'آدم ربا', 'بلا', 'جان', 'سلامتی']
+                ],
+                minGroups: 2,
+                displayAnswer: 'الف) زنبور دستش را نیش می‌زند. ب) ممکن است دست و پای او بشکند. ج) ممکن است تصادف کند. د) ممکن است دزدیده شود.',
+                reason: 'در تمام این موقعیت‌ها خطر واقعی وجود دارد و ترسیدن در این شرایط کاملاً بجا است و مانع آسیب دیدن بدن و جان انسان می‌شود.'
+            },
+
+            // === بخش درست یا نادرست (۵ سوال) ===
+            {
+                id: 8,
+                priority: false,
+                type: 'tf',
+                typeTitle: 'درست یا نادرست',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۸. احساسات خوشایند در ما تأثیر خوبی می‌گذارند و ما دوست داریم همیشه از آن‌ها دور باشیم.',
+                options: ['درست', 'نادرست'],
+                answer: 'نادرست',
+                displayAnswer: 'نادرست',
+                reason: 'احساسات خوشایند در ما تأثیر خوبی می‌گذارند و ما آن‌ها را دوست داریم؛ این احساسات ناخوشایند هستند که ما دوستشان نداریم و می‌خواهیم از آن‌ها دور باشیم.'
+            },
+            {
+                id: 9,
+                priority: false,
+                type: 'tf',
+                typeTitle: 'درست یا نادرست',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۹. شادی احساسی است که فقط دیگران می‌توانند با انجام دادن کارهایی آن را در ما به وجود بیاورند و خودمان نقشی در ایجاد آن نداریم.',
+                options: ['درست', 'نادرست'],
+                answer: 'نادرست',
+                displayAnswer: 'نادرست',
+                reason: 'شادی احساسی است که هم خود ما می‌توانیم آن را در خودمان به وجود بیاوریم و هم دیگران می‌توانند با انجام دادن کارهایی این احساس را در ما ایجاد کنند.'
+            },
+            {
+                id: 10,
+                priority: false,
+                type: 'tf',
+                typeTitle: 'درست یا نادرست',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                q: '۱۰. خداوند «ترس بجا» را برای مقابله با خطر در وجود جانداران قرار داده است تا از انسان محافظت کند.',
+                options: ['درست', 'نادرست'],
+                answer: 'درست',
+                displayAnswer: 'درست',
+                reason: 'خداوند ترس‌های بجا را برای مقابله با خطر در وجود جانداران قرار داده است و این ترس‌ها از انسان در برابر آسیب‌ها محافظت می‌کنند.'
+            },
+            {
+                id: 11,
+                priority: false,
+                type: 'tf',
+                typeTitle: 'درست یا نادرست',
+                level: 'متوسط | عملکردی و واقعی',
+                levelClass: 'badge-med',
+                q: '۱۱. امیرحسین وقتی می‌بیند دوستش علی از بالای دیوار بلند حیاط مدرسه پایین نمی‌پرد، به او می‌گوید «ترسو»؛ کار امیرحسین نادرست است چون علی با احتیاط کردن، سلامت خود را حفظ کرده است.',
+                options: ['درست', 'نادرست'],
+                answer: 'درست',
+                displayAnswer: 'درست',
+                reason: 'نپریدن از جای بلند یک ترس بجا است زیرا پریدن ممکن است باعث شکستن دست و پا شود؛ بنابراین به فردی که احتیاط می‌کند و جان و سلامت خود را به خطر نمی‌اندازد نباید ترسو گفت.'
+            },
+            {
+                id: 12,
+                priority: false,
+                type: 'tf',
+                typeTitle: 'درست یا نادرست',
+                level: 'دشوار | عملکردی و مفهومی',
+                levelClass: 'badge-hard',
+                q: '۱۲. اگر به خاطر خراب شدن دوچرخه‌مان غمگین شدیم، کشیدن نقاشی یا نوشتن درباره‌ی این احساس روی کاغذ، با یادآوری آن موضوع فقط غم ما را همیشگی می‌کند و کمکی به برطرف شدن اندوه نمی‌کند.',
+                options: ['درست', 'نادرست'],
+                answer: 'نادرست',
+                displayAnswer: 'نادرست',
+                reason: 'یکی از راه‌های درست و مؤثر برای برطرف کردن احساس غم این است که درباره‌ی احساس اندوه خود بنویسیم یا نقاشی کنیم و بدانیم که غم طبیعی است اما همیشگی نیست.'
+            },
+
+            // === بخش چهارگزینه‌ای (۴ سوال) ===
+            {
+                id: 13,
+                priority: false,
+                type: 'mcq',
+                typeTitle: 'چهارگزینه‌ای',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۱۳. کدام‌یک از موارد زیر نمونه‌ای از موقعیت‌ها و احساسات ناخوشایند است؟',
+                options: [
+                    'الف) دیدار دوستان و آشنایان',
+                    'ب) بازی با دوستان در زنگ تفریح',
+                    'ج) گم کردن وسایل خود یا باخت در مسابقات',
+                    'د) خرید لباس و کفش نو'
+                ],
+                answer: 2,
+                displayAnswer: 'گزینه (ج): گم کردن وسایل خود یا باخت در مسابقات',
+                reason: 'گم کردن وسایل خود و باخت در مسابقات از نمونه‌های احساسات ناخوشایند هستند، در حالی که دیدار دوستان، بازی در زنگ تفریح و خرید لباس و کفش نمونه‌های احساس خوشایند می‌باشند.'
+            },
+            {
+                id: 14,
+                priority: false,
+                type: 'mcq',
+                typeTitle: 'چهارگزینه‌ای',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                q: '۱۴. «آواز پرندگان، ترانه زیبا و صدای زنگ تفریح» در کدام دسته از عوامل شادی‌بخش قرار می‌گیرند؟',
+                options: [
+                    'الف) کارهایی که انجام دادن آن‌ها ما را شاد می‌کند.',
+                    'ب) چیزهایی که شنیدن آن‌ها ما را شاد می‌کند.',
+                    'ج) موضوعاتی که وقتی به آن‌ها فکر می‌کنیم شاد می‌شویم.',
+                    'د) چیزهایی که دیدن آن‌ها ما را شاد می‌کند.'
+                ],
+                answer: 1,
+                displayAnswer: 'گزینه (ب): چیزهایی که شنیدن آن‌ها ما را شاد می‌کند.',
+                reason: 'آواز پرندگان، ترانه زیبا و صدای زنگ تفریح همگی صداهایی هستند که شنیدن آن‌ها باعث ایجاد حس شادی در ما می‌شود.'
+            },
+            {
+                id: 15,
+                priority: false,
+                type: 'mcq',
+                typeTitle: 'چهارگزینه‌ای',
+                level: 'متوسط | عملکردی و واقعی',
+                levelClass: 'badge-med',
+                q: '۱۵. سارا در حال رفتن به خانه است که در یک کوچه‌ی خلوت، ناگهان صدای انفجار ترقه به گوشش می‌خورد؛ و در خانه هم وقتی مشغول تماشای کارتون مورد علاقه‌اش است، برادرش بدون اجازه شبکه تلویزیون را عوض می‌کند. سارا به ترتیب چه احساساتی را تجربه کرده است؟',
+                options: [
+                    'الف) اندوه ـ ترس',
+                    'ب) عصبانیت ـ اندوه',
+                    'ج) ترس ـ عصبانیت',
+                    'د) ترس ـ اندوه'
+                ],
+                answer: 2,
+                displayAnswer: 'گزینه (ج): ترس ـ عصبانیت',
+                reason: 'شنیدن ناگهانی صدای انفجار ترقه در کوچه خلوت باعث «ترس» و عوض کردن شبکه تلویزیون توسط برادر هنگام تماشای برنامه مورد علاقه باعث «عصبانیت» می‌شود.'
+            },
+            {
+                id: 16,
+                priority: false,
+                type: 'mcq',
+                typeTitle: 'چهارگزینه‌ای',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                q: '۱۶. کدام‌یک از گزینه‌های زیر جزو راه‌های درست برای برطرف کردن احساس غم و اندوه است؟',
+                options: [
+                    'الف) پنهان کردن ناراحتی از پدر، مادر و مشاور مدرسه',
+                    'ب) ترساندن دیگران برای شوخی و تفریح و فراموش کردن غم',
+                    'ج) فکر نکردن به علت اندوه و مقصر دانستن دوستان',
+                    'د) دعا کردن و همچنین انجام کارهای شاد یا کمک به دیگران'
+                ],
+                answer: 3,
+                displayAnswer: 'گزینه (د): دعا کردن و همچنین انجام کارهای شاد یا کمک به دیگران',
+                reason: 'دعا کردن و کمک گرفتن از خداوند بزرگ و همچنین انجام دادن کارهای شاد و سرگرم‌کننده یا کمک به دیگران از راهکارهای اصلی برطرف کردن غم و اندوه هستند.'
+            },
+
+            // === بخش جای خالی (۴ سوال) ===
+            {
+                id: 17,
+                priority: false,
+                type: 'blank',
+                typeTitle: 'جای خالی',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۱۷. وقتی معلم به خاطر تلاش‌هایمان در کلاس به ما جایزه‌ی خوبی می‌دهد، احساس ........................ در ما به وجود می‌آید.',
+                hint: 'کلمه مورد نظر برای جای خالی را بنویسید.',
+                groups: [['خوشحالی', 'شادی', 'خوشایند', 'خوشحال', 'شادمانی']],
+                minGroups: 1,
+                displayAnswer: 'خوشحالی (شادی)',
+                reason: 'گرفتن جایزه از معلم به خاطر تلاش‌ها، احساس خوشحالی و شادی را در ما به وجود می‌آورد.'
+            },
+            {
+                id: 18,
+                priority: false,
+                type: 'blank',
+                typeTitle: 'جای خالی',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                q: '۱۸. احساس ترس به دو نوعِ ترس ........................ و ترس ........................ تقسیم می‌شود.',
+                hint: 'هر دو کلمه را با فاصله یا خط تیره بنویسید.',
+                groups: [
+                    ['بجا', 'به جا', 'درست', 'مفید'],
+                    ['نابجا', 'نابه جا', 'نا بجا', 'بیجا', 'غلط']
+                ],
+                minGroups: 2,
+                displayAnswer: 'بجا ـ نابجا',
+                reason: 'احساس ترس بر اساس فایده و تاثیر آن به دو نوع «ترس بجا» و «ترس نابجا» تقسیم می‌شود.'
+            },
+            {
+                id: 19,
+                priority: false,
+                type: 'blank',
+                typeTitle: 'جای خالی',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                q: '۱۹. به کسی که در برابر خطرها ترس بجا دارد، نباید ترسو بگوییم؛ زیرا او ........................ می‌کند و سلامت و جان خود را به خطر نمی‌اندازد.',
+                hint: 'کلمه مناسب برای جای خالی را بنویسید.',
+                groups: [['احتیاط', 'مراقبت', 'محافظت', 'دقت', 'مواظبت']],
+                minGroups: 1,
+                displayAnswer: 'احتیاط',
+                reason: 'کسی که ترس بجا دارد ترسو نیست، چون او احتیاط می‌کند و با این کار سلامت و جان خود را به خطر نمی‌اندازد.'
+            },
+            {
+                id: 20,
+                priority: false,
+                type: 'blank',
+                typeTitle: 'جای خالی',
+                level: 'متوسط | عملکردی و واقعی',
+                levelClass: 'badge-med',
+                q: '۲۰. اگر دوست صمیمی شما بخواهد از محله‌ی شما برود و در شهر دیگری زندگی کند، شما دچار احساس ........................ می‌شوید و می‌توانید برای کم شدن این ناراحتی با بزرگ‌ترها مانند پدر، مادر یا ........................ مدرسه صحبت و مشورت کنید.',
+                hint: 'پاسخ دو جای خالی را بنویسید (مثلاً: اندوه - مشاور).',
+                groups: [
+                    ['اندوه', 'غم', 'ناراحتی', 'غمگینی', 'غصه'],
+                    ['معلم', 'مشاور', 'مربی', 'مدیر', 'معلمان']
+                ],
+                minGroups: 2,
+                displayAnswer: 'اندوه (غم) ـ معلم / مشاور',
+                reason: 'رفتن دوست صمیمی از محله احساس اندوه و غم ایجاد می‌کند و برای برطرف شدن آن می‌توانیم از بزرگ‌ترها مانند پدر و مادر، معلم یا مشاور مدرسه کمک بگیریم.'
+            },
+
+            // === بخش انتخاب پاسخ (۵ سوال - نمایش در داخل جمله) ===
+            {
+                id: 21,
+                priority: false,
+                type: 'choice',
+                typeTitle: 'انتخاب پاسخ',
+                level: 'آسان | متنی',
+                levelClass: 'badge-easy',
+                qBefore: '۲۱. از دست دادن عزیزان یا بیمار شدن اعضای خانواده، نمونه‌هایی از احساسات ',
+                qAfter: ' هستند.',
+                options: ['خوشایند', 'ناخوشایند'],
+                answer: 'ناخوشایند',
+                displayAnswer: 'ناخوشایند',
+                reason: 'از دست دادن عزیزان و بیمار شدن دوست و اعضای خانواده از نمونه‌های بارز احساسات ناخوشایند هستند که ما آن‌ها را دوست نداریم.'
+            },
+            {
+                id: 22,
+                priority: false,
+                type: 'choice',
+                typeTitle: 'انتخاب پاسخ',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                qBefore: '۲۲. آیا در جهان کسی پیدا می‌شود که در طول زندگی خود هیچ‌گاه احساس غم و اندوه نکرده باشد؟ ',
+                qAfter: '',
+                options: ['بله', 'خیر'],
+                answer: 'خیر',
+                displayAnswer: 'خیر',
+                reason: 'هیچ انسانی نیست که در زندگی خود احساس غم نکرده باشد؛ زیرا غم و اندوه احساسی طبیعی است که برای همه‌ی افراد پیش می‌آید.'
+            },
+            {
+                id: 23,
+                priority: false,
+                type: 'choice',
+                typeTitle: 'انتخاب پاسخ',
+                level: 'متوسط | متنی',
+                levelClass: 'badge-med',
+                qBefore: '۲۳. ما نباید حتی برای شوخی و تفریح، دیگران را ',
+                qAfter: '.',
+                options: ['بترسانیم', 'شاد کنیم'],
+                answer: 'بترسانیم',
+                displayAnswer: 'بترسانیم',
+                reason: 'ما هرگز نباید برای شوخی و تفریح دیگران را بترسانیم، زیرا ترس ناگهانی به سلامت و آرامش دیگران آسیب می‌زند.'
+            },
+            {
+                id: 24,
+                priority: false,
+                type: 'choice',
+                typeTitle: 'انتخاب پاسخ',
+                level: 'متوسط | عملکردی و واقعی',
+                levelClass: 'badge-med',
+                qBefore: '۲۴. اگر دانش‌آموزی در خیابان از نزدیک شدن به فرد غریبه‌ای که می‌خواهد او را با خود ببرد خودداری کند و بترسد، ترس او یک ترس ',
+                qAfter: ' است.',
+                options: ['بجا', 'نابجا'],
+                answer: 'بجا',
+                displayAnswer: 'بجا',
+                reason: 'رفتن همراه فرد غریبه در خیابان خطر دزدیده شدن دارد؛ بنابراین ترسیدن از این موقعیت یک ترس بجا است که از جان و سلامت دانش‌آموز محافظت می‌کند.'
+            },
+            {
+                id: 25,
+                priority: false,
+                type: 'choice',
+                typeTitle: 'انتخاب پاسخ',
+                level: 'دشوار | عملکردی و مفهومی',
+                levelClass: 'badge-hard',
+                qBefore: '۲۵. زهرا برای برطرف کردن غمِ خراب شدن اسباب‌بازی‌اش، به جای گریه کردن مداوم، تصمیم می‌گیرد به مادرش در چیدن سفره کمک کند تا کمتر به ناراحتی خود فکر کند؛ او در این موقعیت از روش ',
+                qAfter: ' استفاده کرده است.',
+                options: ['مشورت با بزرگ‌ترها', 'کمک به دیگران و کار مفید'],
+                answer: 'کمک به دیگران و کار مفید',
+                displayAnswer: 'کمک به دیگران و کار مفید',
+                reason: 'یکی از راه‌های بسیار خوب برای کاهش اندوه این است که با انجام دادن کارهای شاد و سرگرم‌کننده یا کمک به دیگران، کمتر به ناراحتی خود فکر کنیم.'
+            }
+        ];
+
+        // نردبان‌ها شامل ۲ نردبان معمولی و ۱ نردبان بزرگ طلایی هیجان‌انگیز (از ۲۵ به ۷۴)
+        const ladders = [
+            {s: 9, e: 22, big: false},
+            {s: 25, e: 74, big: true},   // پله بزرگ طلایی
+            {s: 68, e: 81, big: false}
+        ];
+        // مارها شامل ۴ مار معمولی و ۱ شاه‌مار بزرگ هیجان‌انگیز (از ۸۹ به ۳۲)
+        const snakes = [
+            {s: 17, e: 7, big: false},
+            {s: 54, e: 38, big: false},
+            {s: 64, e: 55, big: false},
+            {s: 89, e: 32, big: true},   // مار بزرگ (شاه‌مار)
+            {s: 96, e: 84, big: false}
+        ];
+
+        let questionDeck = [];
+        let uniqueAnsweredIds = new Set();
+        let totalQuestionsAsked = 0;
+        let correctAnswersCount = 0;
+        let wrongAnswersCount = 0;
+        let totalMoves = 0;
+        let currentPos = 1, playerName = "";
+        let timerInterval, timeLeft = 60, isMuted = true;
+        let snakeHits = 0;
+        let currentRoll = 0, currentQuestion = null;
+
+        let bgAudio = document.getElementById('bg-audio');
+        bgAudio.volume = 0.4;
+
+        // نرمال‌سازی حروف فارسی و فاصله‌ها
+        function normalizePersian(str) {
+            if (!str) return "";
+            return str.toString()
+                .replace(/ي/g, 'ی')
+                .replace(/ك/g, 'ک')
+                .replace(/ؤ/g, 'و')
+                .replace(/[أإآ]/g, 'ا')
+                .replace(/ة/g, 'ه')
+                .replace(/‌/g, ' ')
+                .replace(/[َُِّْٰ،؛,.؟!«»()\-]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // فاصله ویرایشی (Levenshtein) برای تشخیص ۷۰٪ شباهت کلمه
+        function editDistance(a, b) {
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function wordSimilarity(w1, w2) {
+            const s1 = w1.replace(/\s+/g, '');
+            const s2 = w2.replace(/\s+/g, '');
+            const maxLen = Math.max(s1.length, s2.length);
+            if (maxLen === 0) return 1;
+            return (maxLen - editDistance(s1, s2)) / maxLen;
+        }
+
+        function isKeywordMatched(userTextNorm, keywordRaw) {
+            const kw = normalizePersian(keywordRaw);
+            if (!kw) return false;
+            if (userTextNorm.includes(kw)) return true;
+
+            const userWords = userTextNorm.split(' ');
+            const kwNoSpace = kw.replace(/\s+/g, '');
+
+            for (let i = 0; i < userWords.length; i++) {
+                if (wordSimilarity(userWords[i], kwNoSpace) >= 0.70) return true;
+                if (i + 1 < userWords.length) {
+                    const combined = userWords[i] + userWords[i + 1];
+                    if (wordSimilarity(combined, kwNoSpace) >= 0.70) return true;
+                }
+            }
+            return false;
+        }
+
+        // ارزیابی مفهومی پیشرفته برای سوالات جای خالی و تشریحی
+        function evaluateConceptualAnswer(userText, questionObj) {
+            const normUser = normalizePersian(userText);
+            if (normUser.length < 2) return false;
+
+            let matchedGroupsCount = 0;
+            let totalMatchedKeywords = 0;
+
+            for (const group of questionObj.groups) {
+                let groupHit = false;
+                for (const kw of group) {
+                    if (isKeywordMatched(normUser, kw)) {
+                        groupHit = true;
+                        totalMatchedKeywords++;
+                    }
+                }
+                if (groupHit) matchedGroupsCount++;
+            }
+
+            if (matchedGroupsCount >= questionObj.minGroups) return true;
+
+            if (questionObj.type === 'desc') {
+                if (totalMatchedKeywords >= 2) return true;
+                if (matchedGroupsCount >= 1 && normUser.split(' ').length >= 3) return true;
+            }
+
+            return false;
+        }
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        // چیدمان هوشمند سوالات: هر ۲ تا ۳ سوال از تیپ‌های دیگر می‌آید و سپس ۱ سوال تشریحی (بدون پشت سر هم آمدن تشریحی‌ها)
+        function refillAndShuffleDeck() {
+            const priorityDescs = shuffleArray(questionsBank.filter(q => q.type === 'desc' && q.priority));
+            const otherDescs = shuffleArray(questionsBank.filter(q => q.type === 'desc' && !q.priority));
+            const allDescs = [...priorityDescs, ...otherDescs];
+
+            const nonDescByType = {
+                tf: shuffleArray(questionsBank.filter(q => q.type === 'tf')),
+                mcq: shuffleArray(questionsBank.filter(q => q.type === 'mcq')),
+                choice: shuffleArray(questionsBank.filter(q => q.type === 'choice')),
+                blank: shuffleArray(questionsBank.filter(q => q.type === 'blank'))
+            };
+
+            const mixedNonDescs = [];
+            for (let r = 0; r < 5; r++) {
+                const typesOrder = shuffleArray(['tf', 'mcq', 'choice', 'blank']);
+                typesOrder.forEach(t => {
+                    if (nonDescByType[t].length > 0) {
+                        mixedNonDescs.push(nonDescByType[t].pop());
+                    }
+                });
+            }
+
+            const finalOrder = [];
+            let nonDescIdx = 0;
+            let descIdx = 0;
+            const gapPattern = [2, 3, 2, 3, 2, 3, 3];
+            let patternStep = 0;
+
+            while (nonDescIdx < mixedNonDescs.length || descIdx < allDescs.length) {
+                const gapCount = gapPattern[patternStep % gapPattern.length];
+                patternStep++;
+
+                for (let i = 0; i < gapCount && nonDescIdx < mixedNonDescs.length; i++) {
+                    finalOrder.push(mixedNonDescs[nonDescIdx++]);
+                }
+
+                if (descIdx < allDescs.length) {
+                    finalOrder.push(allDescs[descIdx++]);
+                }
+            }
+
+            questionDeck = finalOrder.reverse();
+        }
+
+        function getNextUniqueQuestion() {
+            if (questionDeck.length === 0) {
+                refillAndShuffleDeck();
+            }
+            const q = questionDeck.pop();
+            uniqueAnsweredIds.add(q.id);
+            totalQuestionsAsked++;
+            document.getElementById('display-qcount').innerText = `سوال: ${toPersianDigits(uniqueAnsweredIds.size)} از ۲۵`;
+            return q;
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playEffect(type) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'dice') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+                gain.gain.setValueAtTime(0.8, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+            } else if (type === 'jump') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(400, now);
+                osc.frequency.linearRampToValueAtTime(600, now + 0.1);
+                gain.gain.setValueAtTime(0.8, now); gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                osc.start(now); osc.stop(now + 0.15);
+            } else if (type === 'ladder') {
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(300, now);
+                osc.frequency.linearRampToValueAtTime(800, now + 0.5);
+                gain.gain.setValueAtTime(0.9, now); gain.gain.linearRampToValueAtTime(0, now + 0.6);
+                osc.start(now); osc.stop(now + 0.6);
+            } else if (type === 'snake') {
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(400, now);
+                osc.frequency.linearRampToValueAtTime(100, now + 0.6);
+                gain.gain.setValueAtTime(0.9, now); gain.gain.linearRampToValueAtTime(0, now + 0.7);
+                osc.start(now); osc.stop(now + 0.7);
+            } else if (type === 'correct') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.1);
+                osc.frequency.setValueAtTime(783.99, now + 0.2);
+                gain.gain.setValueAtTime(0.9, now); gain.gain.linearRampToValueAtTime(0, now + 0.5);
+                osc.start(now); osc.stop(now + 0.5);
+            } else if (type === 'wrong') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(200, now);
+                osc.frequency.linearRampToValueAtTime(150, now + 0.4);
+                gain.gain.setValueAtTime(0.8, now); gain.gain.linearRampToValueAtTime(0, now + 0.5);
+                osc.start(now); osc.stop(now + 0.5);
+            }
+        }
+
+        function createBoard() {
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+            for (let r = 9; r >= 0; r--) {
+                for (let c = 0; c < 10; c++) {
+                    let cellNum = (r % 2 === 0) ? (r * 10) + (c + 1) : (r * 10) + (10 - c);
+                    const div = document.createElement('div');
+                    div.className = 'cell'; div.id = 'cell-' + cellNum;
+                    div.innerHTML = toPersianDigits(cellNum);
+                    board.appendChild(div);
+                }
+            }
+            setTimeout(drawSVG, 100);
+        }
+
+        function createSVGElement(tag, attrs) {
+            const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            for (let k in attrs) el.setAttribute(k, attrs[k]);
+            return el;
+        }
+
+        function drawSVG() {
+            const svg = document.getElementById('svg-layer');
+            svg.innerHTML = '';
+            const getCenter = (num) => {
+                const cell = document.getElementById('cell-' + num);
+                if(!cell) return {x:0, y:0};
+                return { x: cell.offsetLeft + cell.offsetWidth/2, y: cell.offsetTop + cell.offsetHeight/2 };
+            };
+
+            // ترسیم نردبان‌ها (نردبان بزرگ طلایی با رنگ و ضخامت ویژه)
+            ladders.forEach(l => {
+                const p1 = getCenter(l.s), p2 = getCenter(l.e);
+                const dx = p2.x - p1.x, dy = p2.y - p1.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const angle = Math.atan2(dy, dx);
+                const spread = l.big ? 14 : 11;
+                const nx = -Math.sin(angle) * spread, ny = Math.cos(angle) * spread;
+                const g = createSVGElement('g', {});
+
+                const railColor = l.big ? '#f39c12' : '#8e44ad';
+                const rungColor = l.big ? '#f1c40f' : '#9b59b6';
+                const railWidth = l.big ? '7' : '5';
+
+                g.appendChild(createSVGElement('line', { x1: p1.x + nx, y1: p1.y + ny, x2: p2.x + nx, y2: p2.y + ny, stroke: railColor, 'stroke-width': railWidth, 'stroke-linecap': 'round' }));
+                g.appendChild(createSVGElement('line', { x1: p1.x - nx, y1: p1.y - ny, x2: p2.x - nx, y2: p2.y - ny, stroke: railColor, 'stroke-width': railWidth, 'stroke-linecap': 'round' }));
+
+                const rungCount = Math.floor(dist / 18);
+                for (let i = 1; i < rungCount; i++) {
+                    const fraction = i / rungCount;
+                    const rx = p1.x + dx * fraction, ry = p1.y + dy * fraction;
+                    g.appendChild(createSVGElement('line', { x1: rx + nx, y1: ry + ny, x2: rx - nx, y2: ry - ny, stroke: rungColor, 'stroke-width': l.big ? '5' : '4' }));
+                }
+                svg.appendChild(g);
+            });
+
+            // ترسیم مارها (شاه‌مار بزرگ با رنگ قرمز آتشین و ابعاد بزرگ‌تر)
+            snakes.forEach(s => {
+                const p1 = getCenter(s.s), p2 = getCenter(s.e);
+                const offsetCurve = s.big ? 55 : 30;
+                const midX = (p1.x + p2.x) / 2 + offsetCurve, midY = (p1.y + p2.y) / 2 - offsetCurve;
+                const g = createSVGElement('g', {});
+                const pathStr = `M ${p1.x} ${p1.y} Q ${midX} ${midY} ${p2.x} ${p2.y}`;
+                
+                const bodyColor = s.big ? '#c0392b' : '#27ae60';
+                const stripeColor = s.big ? '#f1c40f' : '#f1c40f';
+                const bodyWidth = s.big ? '18' : '14';
+
+                g.appendChild(createSVGElement('path', { d: pathStr, fill: 'none', stroke: bodyColor, 'stroke-width': bodyWidth, 'stroke-linecap': 'round' }));
+                g.appendChild(createSVGElement('path', { d: pathStr, fill: 'none', stroke: stripeColor, 'stroke-width': s.big ? '7' : '5', 'stroke-dasharray': '12 12', 'stroke-linecap': 'round' }));
+
+                const angleDeg = Math.atan2(midY - p1.y, midX - p1.x) * (180 / Math.PI);
+                const headG = createSVGElement('g', { transform: `translate(${p1.x}, ${p1.y}) rotate(${angleDeg})` });
+                
+                const rx = s.big ? '15' : '12';
+                const ry = s.big ? '11' : '9';
+                headG.appendChild(createSVGElement('ellipse', { cx: '0', cy: '0', rx: rx, ry: ry, fill: bodyColor }));
+                headG.appendChild(createSVGElement('circle', { cx: '3', cy: '-4', r: '2.8', fill: 'white' }));
+                headG.appendChild(createSVGElement('circle', { cx: '3', cy: '4', r: '2.8', fill: 'white' }));
+                headG.appendChild(createSVGElement('circle', { cx: '4', cy: '-4', r: '1.4', fill: 'black' }));
+                headG.appendChild(createSVGElement('circle', { cx: '4', cy: '4', r: '1.4', fill: 'black' }));
+                headG.appendChild(createSVGElement('path', { d: 'M -14 0 L -23 0 M -23 0 L -27 -4 M -23 0 L -27 4', stroke: '#ffeb3b', 'stroke-width': '1.8', fill: 'none' }));
+
+                g.appendChild(headG); svg.appendChild(g);
+            });
+        }
+        window.addEventListener('resize', drawSVG);
+
+        function startGame() {
+            playerName = document.getElementById('student-name').value.trim();
+            if (!playerName) return alert("قهرمان من، لطفا اسمت رو بنویس!");
+            
+            refillAndShuffleDeck();
+            document.getElementById('screen-home').style.display = 'none';
+            document.getElementById('screen-game').style.display = 'block';
+            document.getElementById('display-name').innerText = `بازیکن: ${playerName}`;
+            
+            createBoard(); updatePiecePosition();
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if (bgAudio.paused) {
+                bgAudio.play().catch(() => {});
+                isMuted = false;
+                document.getElementById('music-icon').innerText = '🔊';
+            }
+        }
+
+        // محاسبه مقصد نهایی یک پرتاب با در نظر گرفتن مارها و نردبان‌ها
+        function getFinalDestination(pos, roll) {
+            let next = pos + roll;
+            if (next > 100) next = 100;
+            const l = ladders.find(item => item.s === next);
+            if (l) return l.e;
+            const s = snakes.find(item => item.s === next);
+            if (s) return s.e;
+            return next;
+        }
+
+        // تنظیم هوشمند تاس بر اساس تعداد پاسخ‌های صحیح (هدف: رسیدن به خانه ۱۰۰ دقیقاً بین ۱۵ تا ۲۵ پاسخ صحیح)
+        function getSmartRoll() {
+            const targetCorrectAnswers = 21;
+            const nextCorrectIndex = correctAnswersCount + 1;
+            const remainingCorrectNeeded = Math.max(1, targetCorrectAnswers - correctAnswersCount);
+            const remainingDist = 100 - currentPos;
+            const idealGain = remainingDist / remainingCorrectNeeded;
+
+            let possibleRolls = [1, 2, 3, 4, 5, 6];
+
+            // قانون ۱: تا قبل از رسیدن به حداقل ۱۶ پاسخ صحیح، اجازه نده مهره به خانه ۱۰۰ برسد
+            if (nextCorrectIndex < 16) {
+                const safeFromFinish = possibleRolls.filter(r => getFinalDestination(currentPos, r) < 99);
+                if (safeFromFinish.length > 0) possibleRolls = safeFromFinish;
+            }
+
+            // قانون ۲: اگر بازیکن به پاسخ صحیح ۲۲ به بعد رسیده، کمک کن سریع‌تر به ۱۰۰ برسد
+            if (nextCorrectIndex >= 22) {
+                possibleRolls.sort((a, b) => getFinalDestination(currentPos, b) - getFinalDestination(currentPos, a));
+                return possibleRolls[0];
+            }
+
+            // قانون ۳: انتخاب پرتابی که پیشرفت مهره را نزدیک به میانگین استاندارد نگه دارد
+            let bestRolls = [];
+            let minDiff = 999;
+
+            possibleRolls.forEach(r => {
+                const dest = getFinalDestination(currentPos, r);
+                const actualGain = dest - currentPos;
+
+                // جلوگیری از افتادن روی مار بزرگ در اواخر بازی اگر قبلاً مار خورده است
+                if (actualGain < -30 && (snakeHits >= 1 || nextCorrectIndex > 14)) return;
+                if (actualGain < 0 && snakeHits >= 2) return;
+
+                const diff = Math.abs(actualGain - idealGain);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    bestRolls = [r];
+                } else if (Math.abs(diff - minDiff) <= 2) {
+                    bestRolls.push(r);
+                }
+            });
+
+            if (bestRolls.length > 0) {
+                return bestRolls[Math.floor(Math.random() * bestRolls.length)];
+            }
+            return possibleRolls[Math.floor(Math.random() * possibleRolls.length)];
+        }
+
+        function rollDice() {
+            const cube = document.getElementById('cube');
+            const scene = document.getElementById('dice-scene');
+            scene.style.pointerEvents = 'none';
+            playEffect('dice');
+            
+            totalMoves++;
+            document.getElementById('display-moves').innerText = `پرتاب تاس: ${toPersianDigits(totalMoves)}`;
+
+            const finalRoll = getSmartRoll();
+            
+            const xRand = Math.floor(Math.random() * 4 + 1) * 360;
+            const yRand = Math.floor(Math.random() * 4 + 1) * 360;
+            let xRot = xRand, yRot = yRand;
+            
+            switch(finalRoll) {
+                case 1: xRot += 0; yRot += 0; break;
+                case 2: xRot += 0; yRot += -90; break;
+                case 3: xRot += 0; yRot += -180; break;
+                case 4: xRot += 0; yRot += 90; break;
+                case 5: xRot += -90; yRot += 0; break;
+                case 6: xRot += 90; yRot += 0; break;
+            }
+
+            cube.style.transform = `translateZ(-37.5px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
+
+            setTimeout(() => {
+                showQuestion(finalRoll);
+            }, 1100);
+        }
+
+        function formatTimerText(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            if (m > 0) {
+                return `⏱️ زمان: ${toPersianDigits(m)} دقیقه و ${toPersianDigits(s)} ثانیه`;
+            }
+            return `⏱️ زمان: ${toPersianDigits(s)} ثانیه`;
+        }
+
+        function showQuestion(roll) {
+            currentRoll = roll;
+            currentQuestion = getNextUniqueQuestion();
+
+            const typeBadge = document.getElementById('q-type-badge');
+            typeBadge.innerText = currentQuestion.typeTitle;
+            typeBadge.className = currentQuestion.priority ? 'badge badge-priority' : 'badge badge-type';
+
+            const lvlBadge = document.getElementById('q-level-badge');
+            lvlBadge.innerText = `سطح: ${currentQuestion.level}`;
+            lvlBadge.className = `badge ${currentQuestion.levelClass}`;
+            document.getElementById('q-num-badge').innerText = `سوال ${toPersianDigits(currentQuestion.id)} (پرسیده شده: ${toPersianDigits(uniqueAnsweredIds.size)} از ۲۵)`;
+
+            const qTextEl = document.getElementById('question-text');
+            document.getElementById('feedback-msg').style.display = 'none';
+
+            const area = document.getElementById('interaction-area');
+            area.innerHTML = '';
+
+            // زمان پاسخ به سوالات تشریحی ۲ دقیقه (۱۲۰ ثانیه) و سایر سوالات ۱ دقیقه (۶۰ ثانیه)
+            if (currentQuestion.type === 'desc') {
+                timeLeft = 120;
+            } else {
+                timeLeft = 60;
+            }
+            document.getElementById('timer').innerText = formatTimerText(timeLeft);
+
+            // نمایش اختصاصی هر نوع سوال
+            if (currentQuestion.type === 'choice') {
+                qTextEl.innerHTML = '';
+                const spanBefore = document.createElement('span');
+                spanBefore.innerText = currentQuestion.qBefore;
+                qTextEl.appendChild(spanBefore);
+
+                const choiceBox = document.createElement('span');
+                choiceBox.className = 'inline-choice-box';
+
+                currentQuestion.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'inline-choice-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => verifyUserAnswer(opt);
+                    choiceBox.appendChild(btn);
+
+                    if (idx === 0) {
+                        const sep = document.createElement('span');
+                        sep.innerText = ' / ';
+                        sep.style.color = '#6c5ce7';
+                        sep.style.fontWeight = 'bold';
+                        choiceBox.appendChild(sep);
+                    }
+                });
+
+                qTextEl.appendChild(choiceBox);
+
+                const spanAfter = document.createElement('span');
+                spanAfter.innerText = currentQuestion.qAfter;
+                qTextEl.appendChild(spanAfter);
+
+                const guide = document.createElement('div');
+                guide.className = 'hint-box';
+                guide.innerText = '👆 روی کلمه‌ی درست داخل کادر بنفش در متن بالا کلیک کن!';
+                area.appendChild(guide);
+
+            } else if (currentQuestion.type === 'tf') {
+                qTextEl.innerText = currentQuestion.q;
+                const row = document.createElement('div');
+                row.className = 'options-row';
+                currentQuestion.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'opt-btn center-text';
+                    btn.innerText = opt === 'درست' ? '✅ درست' : '❌ نادرست';
+                    btn.onclick = () => verifyUserAnswer(opt);
+                    row.appendChild(btn);
+                });
+                area.appendChild(row);
+
+            } else if (currentQuestion.type === 'mcq') {
+                qTextEl.innerText = currentQuestion.q;
+                const grid = document.createElement('div');
+                grid.className = 'options-grid';
+                currentQuestion.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'opt-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => verifyUserAnswer(idx);
+                    grid.appendChild(btn);
+                });
+                area.appendChild(grid);
+
+            } else if (currentQuestion.type === 'blank') {
+                qTextEl.innerText = currentQuestion.q;
+                if (currentQuestion.hint) {
+                    const hint = document.createElement('div');
+                    hint.className = 'hint-box';
+                    hint.innerText = `💡 راهنما: ${currentQuestion.hint}`;
+                    area.appendChild(hint);
+                }
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.id = 'answer-input';
+                inp.placeholder = 'کلمه مناسب جای خالی را بنویسید...';
+                inp.addEventListener('keypress', (e) => { if (e.key === 'Enter') verifyUserAnswer(inp.value); });
+                area.appendChild(inp);
+
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'btn-start';
+                submitBtn.style.marginTop = '12px';
+                submitBtn.style.width = '80%';
+                submitBtn.style.padding = '10px';
+                submitBtn.innerText = 'ثبت پاسخ';
+                submitBtn.onclick = () => verifyUserAnswer(inp.value);
+                area.appendChild(submitBtn);
+                setTimeout(() => inp.focus(), 100);
+
+            } else if (currentQuestion.type === 'desc') {
+                qTextEl.innerText = currentQuestion.q;
+                if (currentQuestion.hint) {
+                    const hint = document.createElement('div');
+                    hint.className = 'hint-box';
+                    hint.innerText = `💡 راهنمای پاسخ مفهومی: ${currentQuestion.hint}`;
+                    area.appendChild(hint);
+                }
+                const txt = document.createElement('textarea');
+                txt.id = 'answer-input';
+                txt.placeholder = 'پاسخ یا مفهوم مورد نظر را به زبان خودت بنویس...';
+                area.appendChild(txt);
+
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'btn-start';
+                submitBtn.style.marginTop = '12px';
+                submitBtn.style.width = '80%';
+                submitBtn.style.padding = '10px';
+                submitBtn.innerText = 'ثبت پاسخ تشریحی';
+                submitBtn.onclick = () => verifyUserAnswer(txt.value);
+                area.appendChild(submitBtn);
+                setTimeout(() => txt.focus(), 100);
+            }
+
+            document.getElementById('question-modal').style.display = 'flex';
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = formatTimerText(timeLeft);
+                if (timeLeft <= 0) verifyUserAnswer(null, true);
+            }, 1000);
+        }
+
+        function verifyUserAnswer(userVal, isTimeout = false) {
+            clearInterval(timerInterval);
+            const area = document.getElementById('interaction-area');
+            area.innerHTML = '';
+
+            const inlineBtns = document.querySelectorAll('.inline-choice-btn');
+            inlineBtns.forEach(b => { b.disabled = true; b.style.cursor = 'default'; });
+
+            let isCorrect = false;
+            if (!isTimeout && userVal !== null) {
+                if (currentQuestion.type === 'tf' || currentQuestion.type === 'choice' || currentQuestion.type === 'mcq') {
+                    isCorrect = (userVal === currentQuestion.answer);
+                } else {
+                    isCorrect = evaluateConceptualAnswer(userVal, currentQuestion);
+                }
+            }
+
+            const feedbackEl = document.getElementById('feedback-msg');
+            const modalBox = document.getElementById('modal-box');
+            feedbackEl.style.display = 'block';
+            const persianRoll = toPersianDigits(currentRoll);
+
+            if (isCorrect) {
+                playEffect('correct');
+                correctAnswersCount++;
+                document.getElementById('display-correct').innerText = `پاسخ صحیح: ${toPersianDigits(correctAnswersCount)}`;
+
+                feedbackEl.style.backgroundColor = '#e3fcef';
+                feedbackEl.style.border = '2px solid #00b894';
+                feedbackEl.style.color = '#006266';
+                feedbackEl.innerHTML = `
+                    <div style="font-family:'BTitr', sans-serif; font-size:1.15rem; color:#00b894;">🎯 آفرین قهرمان! پاسخت کاملاً درست بود. (${persianRoll} خانه به جلو می‌روی!)</div>
+                    <div class="reason-box"><b>✅ پاسخ کامل:</b> ${currentQuestion.displayAnswer}<br><b>📘 دلیل درستی پاسخ:</b> ${currentQuestion.reason}</div>
+                    <div style="text-align:center;">
+                        <button class="btn-continue" onclick="proceedAfterQuestion(true)">ادامه و حرکت مهره (${persianRoll} خانه) 🎲</button>
+                    </div>
+                `;
+                createConfetti(35);
+            } else {
+                playEffect('wrong');
+                wrongAnswersCount++;
+                modalBox.classList.add('shake-animation');
+                setTimeout(() => modalBox.classList.remove('shake-animation'), 500);
+
+                if (currentQuestion.priority) {
+                    questionDeck.unshift(currentQuestion);
+                }
+
+                feedbackEl.style.backgroundColor = '#fff0f3';
+                feedbackEl.style.border = '2px solid #e74c3c';
+                feedbackEl.style.color = '#b33939';
+
+                let titleMsg = isTimeout ? '⏳ زمان پاسخگویی تمام شد! (مهره حرکت نمی‌کند)' : '❌ پاسخت دقیق نبود! برای حرکت به جلو باید پاسخ درست بدهی؛ نکته زیر رو خوب یاد بگیر:';
+                feedbackEl.innerHTML = `
+                    <div style="font-family:'BTitr', sans-serif; font-size:1.1rem; color:#e74c3c;">${titleMsg}</div>
+                    <div class="reason-box"><b>✅ پاسخ صحیح:</b> ${currentQuestion.displayAnswer}<br><b>📘 دلیل درستی پاسخ:</b> ${currentQuestion.reason}</div>
+                    <div style="text-align:center;">
+                        <button class="btn-continue" onclick="proceedAfterQuestion(false)">یاد گرفتم! پرتاب بعدی 👈</button>
+                    </div>
+                `;
+            }
+        }
+
+        function proceedAfterQuestion(wasCorrect) {
+            closeModal();
+            if (wasCorrect) {
+                movePlayer(currentRoll);
+            } else {
+                document.getElementById('dice-scene').style.pointerEvents = 'auto';
+            }
+        }
+
+        function movePlayer(steps) {
+            let stepCount = 0;
+            let moveInterval = setInterval(() => {
+                if (currentPos < 100) {
+                    currentPos++;
+                    updatePiecePosition();
+                    playEffect('jump');
+                }
+                stepCount++;
+                if (stepCount >= steps || currentPos >= 100) {
+                    clearInterval(moveInterval);
+                    setTimeout(checkSnakeOrLadder, 450);
+                }
+            }, 350);
+        }
+
+        function checkSnakeOrLadder() {
+            let ladder = ladders.find(l => l.s === currentPos);
+            let snake = snakes.find(s => s.s === currentPos);
+
+            if (ladder) {
+                playEffect('ladder');
+                currentPos = ladder.e;
+                updatePiecePosition();
+            } else if (snake) {
+                playEffect('snake');
+                snakeHits++;
+                currentPos = snake.e;
+                updatePiecePosition();
+            }
+
+            if (currentPos >= 100) {
+                setTimeout(endGame, 600);
+            } else {
+                document.getElementById('dice-scene').style.pointerEvents = 'auto';
+            }
+        }
+
+        function updatePiecePosition() {
+            const cell = document.getElementById('cell-' + currentPos);
+            const piece = document.getElementById('player-piece');
+            if (!cell) return;
+            piece.style.top = cell.offsetTop + 'px';
+            piece.style.left = cell.offsetLeft + 'px';
+            piece.style.width = cell.offsetWidth + 'px';
+            piece.style.height = cell.offsetHeight + 'px';
+            document.getElementById('display-pos').innerText = `خونه: ${toPersianDigits(currentPos)}`;
+        }
+
+        function closeModal() {
+            document.getElementById('question-modal').style.display = 'none';
+        }
+
+        // باز کردن پنجره بازشوی پخش آنلاین ویدیو (داخل بازی)
+        function openVideoModal() {
+            bgAudio.pause();
+            isMuted = true;
+            document.getElementById('music-icon').innerText = '🔇';
+
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('reward-iframe');
+            if (!iframe.src || iframe.src === window.location.href) {
+                iframe.src = REWARD_VIDEO_URL;
+            }
+            modal.style.display = 'flex';
+        }
+
+        // بستن پنجره پخش آنلاین ویدیو
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('reward-iframe');
+            const vid = document.getElementById('reward-video-tag');
+            vid.pause();
+            iframe.src = '';
+            modal.style.display = 'none';
+        }
+
+        // باز کردن انیمیشن در یک پنجره پاپ‌آپ مستقل مرورگر به صورت آنلاین
+        function openPopupWindow() {
+            bgAudio.pause();
+            isMuted = true;
+            document.getElementById('music-icon').innerText = '🔇';
+
+            const width = Math.min(900, window.screen.availWidth - 40);
+            const height = Math.min(620, window.screen.availHeight - 60);
+            const left = (window.screen.availWidth - width) / 2;
+            const top = (window.screen.availHeight - height) / 2;
+
+            window.open(
+                REWARD_VIDEO_URL,
+                'RewardAnimationWindow',
+                `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+            );
+        }
+
+        function endGame() {
+            document.getElementById('screen-game').style.display = 'none';
+            document.getElementById('screen-result').style.display = 'block';
+            
+            const percent = totalQuestionsAsked > 0 ? Math.round((correctAnswersCount / totalQuestionsAsked) * 100) : 0;
+            document.getElementById('score-details').innerHTML = `
+                <p>🏅 <b>نام قهرمان:</b> ${playerName}</p>
+                <p>📚 <b>درس:</b> مطالعات اجتماعی پنجم - درس دوم (احساسات ما)</p>
+                <p>🎲 <b>تعداد کل پرتاب‌های تاس (تلاش دانش‌آموز):</b> ${toPersianDigits(totalMoves)} بار</p>
+                <p>✅ <b>تعداد پاسخ‌های صحیح (ملاک حرکت تا خانه ۱۰۰):</b> ${toPersianDigits(correctAnswersCount)} سوال</p>
+                <p>❌ <b>تعداد پاسخ‌های نادرست / بدون حرکت:</b> ${toPersianDigits(wrongAnswersCount)} مورد</p>
+                <p>📊 <b>درصد دقت و موفقیت در پاسخگویی:</b> ${toPersianDigits(percent)}٪</p>
+            `;
+            createConfetti(100);
+
+            // باز شدن خودکار پنجره پخش آنلاین انیمیشن جایزه پس از ۱.۵ ثانیه
+            setTimeout(() => {
+                openVideoModal();
+            }, 1500);
+        }
+
+        function createConfetti(amount = 30) {
+            for (let i = 0; i < amount; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.width = conf.style.height = (Math.random() * 10 + 5) + 'px';
+                conf.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                conf.style.top = '-20px';
+                document.body.appendChild(conf);
+                
+                conf.animate([
+                    { transform: 'translateY(0) rotate(0)' },
+                    { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)` }
+                ], { duration: 2000 + Math.random() * 2000 }).onfinish = () => conf.remove();
+            }
+        }
+
+        function handleMusicUpload(e) {
+            if(!e.target.files[0]) return;
+            bgAudio.src = URL.createObjectURL(e.target.files[0]);
+            bgAudio.play(); isMuted = false;
+            document.getElementById('music-icon').innerText = '🔊';
+        }
+
+        function toggleMusic() {
+            if (isMuted) { bgAudio.play(); document.getElementById('music-icon').innerText = '🔊'; }
+            else { bgAudio.pause(); document.getElementById('music-icon').innerText = '🔇'; }
+            isMuted = !isMuted;
+        }
+    </script>
+</body>
+</html>
